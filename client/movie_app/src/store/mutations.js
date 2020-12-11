@@ -2,6 +2,7 @@ import axios from 'axios'
 import {Authentication} from './state.js'
 
 
+const BASE_URL = 'http://localhost:8000/api/v1/movie_community'
 const mutations = {
   
 
@@ -16,7 +17,7 @@ const mutations = {
   fetchMovieDetail(state, movieId) {
 
     const myToken = localStorage.getItem('jwt')
-    axios.get(`http://localhost:8000/api/v1/movie_community/movies/${movieId}/reviews`, {params:{}, headers: {'Authorization' : 'JWT ' + myToken }})
+    axios.get(`${BASE_URL}/movies/${movieId}/reviews`, {params:{}, headers: {'Authorization' : 'JWT ' + myToken }})
     .then(res=>{
       const acts = res.data.actors.split(',')
       state.movieDetail.reviews = res.data.reviews
