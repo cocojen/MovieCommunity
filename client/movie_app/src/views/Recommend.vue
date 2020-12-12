@@ -1,14 +1,16 @@
 <template>
   <div>
+    <Menu/>
     <Select/>
   </div>
 </template>
 
 <script>
 import Select from '../components/Select.vue'
+import Menu from './Menu.vue'
 
 export default {
-  components: { Select },
+  components: { Select, Menu },
   name:'Recommend'
 }
 </script>

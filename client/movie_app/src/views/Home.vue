@@ -1,7 +1,8 @@
 <template>
   <div id="homeBack">
-    <no-login />
-    <main-movie-list class="sticker"/>
+    <Menu/>
+    <NoLogin />
+    <MainMovieList class="sticker"/>
   </div>
 </template>
 
@@ -9,12 +10,16 @@
 // @ is an alias to /src
 import MainMovieList from '../components/MainMovieList.vue'
 import NoLogin from '../components/NoLogin.vue'
+import Menu from './Menu.vue'
+// import Menu from './Menu.vue'
 
 export default {
   name: 'Home',
   components: {
     MainMovieList,
     NoLogin,
+    Menu,
+    // Menu,
   },
 }
 </script>

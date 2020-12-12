@@ -186,7 +186,8 @@ export default {
     }
 
     .choices {
-      margin-left: 30%;
+      margin-top: 40%;
+      margin-left: 5%;
       width: 700px;
       font-size: 20px;
       height: 500px;

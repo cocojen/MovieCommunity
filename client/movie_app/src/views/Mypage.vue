@@ -1,5 +1,7 @@
 <template>
   <div class='nomargin'>
+
+      <Menu/>
       <h1>my page</h1>
       <hr>
       <h2>내가 작성한 리뷰</h2>
@@ -20,11 +22,12 @@
 <script>
 import axios from 'axios'
 import MyPageReview from '../components/MyPageReview.vue'
+import Menu from './Menu.vue'
 // import DropDown from '../components/DropDown.vue'
 const SERVER_URL = 'http://127.0.0.1:8000/api/v1/movie_community/user_reviews/'
 
 export default {
-  components: { MyPageReview },
+  components: { MyPageReview, Menu },
     name: 'Mypage',
     data: function() {
         return {

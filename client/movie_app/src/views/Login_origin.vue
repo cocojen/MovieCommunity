@@ -1,4 +1,5 @@
 <template>
+
   <div class="position">
     <Menu/>
     <div class="header">
@@ -89,13 +90,4 @@ const SERVER_URL = 'http://127.0.0.1:8000/api/v1/movie_community/accounts/'
   padding: 10px;
 } */
 
-.position {
-  position: absolute;
-  width: 300px;
-  height: 200px;
-  z-index: 15;
-  top: 30%;
-  left: 50%;
-  margin: -100px 0 0 -150px;
-}
 </style>

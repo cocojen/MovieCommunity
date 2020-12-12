@@ -37,18 +37,6 @@
       </v-navigation-drawer>
       <!-- 왼쪽 네브 바 끝 -->
 
-      <v-content class="itsme">
-        
-        <!-- 여기가 이미지 감싸는 태그인데 마진땜에 전체 안되는 곳임 -->
-        <div class="wallpaper">
-          <v-row justify="center" align="center" class="mt-10">
-            <v-col cols="auto">
-              <!--출력되는곳 -->
-              <router-view/>
-            </v-col>
-          </v-row>
-        </div>
-      </v-content>
 
     </v-app>
 </template>
@@ -97,6 +85,12 @@ export default {
 </script>
 
 <style>
+.v-application--wrap {
+  min-height: 0 !important;
+}
+
+
+
 .welcome-message {
   color: orangered;
   font-weight: 600;

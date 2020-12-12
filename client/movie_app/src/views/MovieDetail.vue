@@ -1,15 +1,21 @@
 <template>
   <div v-if="movieId">
+    <Menu/>
     <movie-info :movieId="movieId"/>
   </div>
 </template>
 
 <script>
 import MovieInfo from '@/components/MovieInfo'
+import Menu from './Menu.vue'
 
 
 export default {
   name:'MovieDetail',
+  components:{
+    MovieInfo,
+    Menu,
+  },
   data: function() {
     return {
       movieId : '',
@@ -33,9 +39,6 @@ export default {
     }
   },
 
-  components:{
-    MovieInfo,
-  },
   created: function() {
       console.log('route params movie id is !!!')
       console.log(this.movieId)

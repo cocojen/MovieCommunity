@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div class="position">
+    <Menu/>
     <div class="header">
       <h2>Sign up</h2>  
     </div>
@@ -57,10 +58,12 @@
 
 <script>
 import axios from 'axios'
+import Menu from './Menu.vue'
 
 const SERVER_URL = 'http://127.0.0.1:8000/api/v1/movie_community/accounts/'
 
   export default {
+  components: { Menu },
     name : 'Signup',
     data: () => ({
       credentials: {
@@ -101,3 +104,16 @@ const SERVER_URL = 'http://127.0.0.1:8000/api/v1/movie_community/accounts/'
     },
   }
 </script>
+
+<style scoped>
+
+.position {
+  position: absolute;
+  width: 300px;
+  height: 200px;
+  z-index: 15;
+  top: 30%;
+  left: 50%;
+  margin: -100px 0 0 -150px;
+}
+</style>
