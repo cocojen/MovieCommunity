@@ -1,10 +1,10 @@
 import axios from 'axios'
 
-
+const API_URL = `http://3.35.18.1:8000/api/v1/movie_community`
 const actions= {
   // 리뷰작성 포스트요청
   createReview(context, review) {
-    const SERVER_URL = `http://localhost:8000/api/v1/movie_community/movies/${review.movieId}/reviews/`
+    const SERVER_URL = `${API_URL}/movies/${review.movieId}/reviews/`
     const myToken = localStorage.getItem('jwt')
     const headers = {headers : {'Authorization' : 'JWT ' + myToken }}
 
@@ -22,7 +22,7 @@ const actions= {
   },
 
   updateMyReviewCheckedDate(context, movieId) {
-    const SERVER_URL = `http://localhost:8000/api/v1/movie_community/movies/${movieId}/reviewsChecked`
+    const SERVER_URL = `${API_URL}/movies/${movieId}/reviewsChecked`
     const myToken = localStorage.getItem('jwt')
     const headers = {headers : {'Authorization' : 'JWT ' + myToken }}
     axios.put(SERVER_URL, {content: ''}, headers)
@@ -36,7 +36,7 @@ const actions= {
 
   // 리뷰 업데이트
   updateReview(context, payload) {
-    const SERVER_URL = `http://localhost:8000/api/v1/movie_community/reviews/${payload.review.id}/`
+    const SERVER_URL = `${API_URL}/reviews/${payload.review.id}/`
     const myToken = localStorage.getItem('jwt')
     const headers = {headers : {'Authorization' : 'JWT ' + myToken }}
     axios.put(SERVER_URL, {content: payload.reviewUpdateContent}, headers)
@@ -54,7 +54,7 @@ const actions= {
   // 리뷰 삭제
   deleteReview(context, review) {
     const myToken = localStorage.getItem('jwt')
-    const SERVER_URL = `http://localhost:8000/api/v1/movie_community/reviews/${review.id}/`
+    const SERVER_URL = `${API_URL}/reviews/${review.id}/`
 
     axios.delete(SERVER_URL, {params:{}, headers: {'Authorization' : 'JWT ' + myToken }})
       .then(res => {
@@ -72,7 +72,7 @@ const actions= {
   // 대댓글 달기
   createReviewComment(context, payload) {
     const myToken = localStorage.getItem('jwt')
-    const SERVER_URL = `http://localhost:8000/api/v1/movie_community/reviews/${payload.review.id}/comments/`
+    const SERVER_URL = `${API_URL}/reviews/${payload.review.id}/comments/`
     const headers = {headers : {'Authorization' : 'JWT ' + myToken }}
 
     axios.post(SERVER_URL, {content: payload.commentContent, review: payload.review.id, movie:payload.movieId}, headers)

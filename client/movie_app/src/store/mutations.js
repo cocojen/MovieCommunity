@@ -16,7 +16,7 @@ const mutations = {
   fetchMovieDetail(state, movieId) {
 
     const myToken = localStorage.getItem('jwt')
-    axios.get(`http://localhost:8000/api/v1/movie_community/movies/${movieId}/reviews`, {params:{}, headers: {'Authorization' : 'JWT ' + myToken }})
+    axios.get(`http://3.35.18.1/api/v1/movie_community/movies/${movieId}/reviews`, {params:{}, headers: {'Authorization' : 'JWT ' + myToken }})
     .then(res=>{
       const acts = res.data.actors.split(',')
       state.movieDetail.reviews = res.data.reviews

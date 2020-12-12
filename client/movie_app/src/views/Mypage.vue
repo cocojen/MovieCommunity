@@ -21,7 +21,7 @@
 import axios from 'axios'
 import MyPageReview from '../components/MyPageReview.vue'
 // import DropDown from '../components/DropDown.vue'
-const SERVER_URL = 'http://127.0.0.1:8000/api/v1/movie_community/user_reviews/'
+const SERVER_URL = 'http://3.35.18.1:8000/api/v1/movie_community/user_reviews/'
 
 export default {
   components: { MyPageReview },
