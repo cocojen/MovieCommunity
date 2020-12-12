@@ -13,7 +13,8 @@ SECRET_KEY = '!y(!prs^0o4*mt%cv-po#infe40%_^*8$46#a(0medyg+3q&ra'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
+CORS_ORIGIN_ALLOW_ALL = True
 
 
 # Application definition
@@ -23,7 +24,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'accounts',
     'corsheaders',
-    'drf_yasg',
 
     'django.contrib.admin',
     'django.contrib.auth',
