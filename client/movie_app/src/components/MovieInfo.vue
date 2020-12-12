@@ -80,6 +80,13 @@ export default {
     movieId : [String, Number]
   },
 
+  watch: {
+    movieId() {
+      console.log('movie id changed')
+      this.$store.commit('fetchMovieDetail', this.movieId)
+    },
+  },
+
   created() {
     this.$store.commit('fetchMovieDetail', this.movieId)
     this.$store.dispatch('updateMyReviewCheckedDate', this.movieId)

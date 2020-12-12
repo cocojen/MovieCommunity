@@ -22,7 +22,14 @@ export default {
 
   watch: {
     $route(){
-      this.movieId = `${this.$route.params.movieId}`
+      this.updatePage(this.$route.params.movieId)
+    }
+  },
+
+  methods: {
+    updatePage(movieId) {
+      console.log('movie id is : ', movieId)
+      this.movieId = movieId
     }
   },
 
