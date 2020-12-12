@@ -7,7 +7,7 @@
 
 <script>
 import MovieInfo from '@/components/MovieInfo'
-import Menu from './Menu.vue'
+import Menu from '../components/Menu.vue'
 
 
 export default {

@@ -7,7 +7,7 @@
 
 <script>
 import Select from '../components/Select.vue'
-import Menu from './Menu.vue'
+import Menu from '../components/Menu.vue'
 
 export default {
   components: { Select, Menu },

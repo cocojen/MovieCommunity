@@ -39,9 +39,9 @@
 <script>
 import axios from 'axios'
 import {mapMutations, mapGetters} from 'vuex'
-import Menu from './Menu.vue'
+import Menu from '../components/Menu.vue'
 
-const SERVER_URL = 'http://127.0.0.1:8000/api/v1/movie_community/accounts/'
+const SERVER_URL = 'http://3.35.18.1:8000/api/v1/movie_community/accounts/'
 
   export default {
   components: { Menu },

@@ -10,7 +10,7 @@
 // @ is an alias to /src
 import MainMovieList from '../components/MainMovieList.vue'
 import NoLogin from '../components/NoLogin.vue'
-import Menu from './Menu.vue'
+import Menu from '../components/Menu.vue'
 // import Menu from './Menu.vue'
 
 export default {

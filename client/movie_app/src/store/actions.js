@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 
-const BASE_URL = `http://localhost:8000/api/v1/movie_community`
+const BASE_URL = `http://3.35.18.1:8000/api/v1/movie_community`
 const actions= {
   // 리뷰작성 포스트요청
   createReview(context, review) {
