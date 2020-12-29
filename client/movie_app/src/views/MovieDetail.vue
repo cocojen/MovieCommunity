@@ -29,11 +29,6 @@ export default {
   components:{
     MovieInfo,
   },
-  created: function() {
-      console.log('route params movie id is !!!')
-      console.log(this.movieId)
-      console.log(this.$route.params.movieId)
-  },
 }
 </script>
 

@@ -78,7 +78,6 @@ const SERVER_URL = 'http://3.35.18.1:8000/api/v1/movie_community/accounts/'
 
     methods: {
       signup() {
-        console.log('signup button clicked')
         console.log(this.credentials)
         axios.post(SERVER_URL + 'signup/', this.credentials)
           .then((res) => {

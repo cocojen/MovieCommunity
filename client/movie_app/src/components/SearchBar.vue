@@ -45,6 +45,7 @@ export default {
       const myToken = localStorage.getItem('jwt')
       axios.get(BASE_URL, {params:{}, headers: {'Authorization' : 'JWT ' + myToken }})
       .then(res=>{
+        console.log(res)
         res.data.forEach(element => {
           this.entries.push(element.title)
         });
@@ -54,6 +55,7 @@ export default {
       })
     },
     goToDetail(search) {
+      console.log('go to detail')
       const myToken = localStorage.getItem('jwt')
       axios.get(BASE_URL, {params:{}, headers: {'Authorization' : 'JWT ' + myToken }})
       .then(res=>{

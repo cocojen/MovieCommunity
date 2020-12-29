@@ -1,4 +1,5 @@
 <template>
+
   <div id="inspire" v-if="isLoaded">
     <div class="white bigback">
           <div style="margin: 10%;">
@@ -8,7 +9,7 @@
             <strong class='mt-5'>Comedy</strong>
             </span>
             <v-col
-              v-for="(movie) in movies.comedy_movies.slice(0,5)"
+              v-for="(movie) in FetchedMoviesByGenre.comedy_movies.slice(0,5)"
               :key="movie.id"
               cols="6"
               md="2"
@@ -30,7 +31,7 @@
             <strong class='mt-5'>Action</strong>
             </span>
             <v-col
-              v-for="(movie) in movies.action_movies.slice(0,5)"
+              v-for="(movie) in FetchedMoviesByGenre.action_movies.slice(0,5)"
               :key="movie.id"
               cols="6"
               md="2"
@@ -50,7 +51,7 @@
             <strong  class='mt-5'>Horror</strong>
             </span>
             <v-col
-              v-for="(movie) in movies.horror_movies.slice(0,5)"
+              v-for="(movie) in FetchedMoviesByGenre.horror_movies.slice(0,5)"
               :key="movie.id"
               cols="6"
               md="2"
@@ -67,41 +68,38 @@
           <div style="margin: 20%;">
           </div>
    
-            <!--Comedy--> 
-        
+            <!--Comedy-->
   
     </div>
   </div>
 </template>
  
 <script>
-const SERVER_URL = 'http://localhost:8000/api/v1/movie_community/movie_list_by_genre/'
+import {mapGetters} from 'vuex'
 
-import axios from 'axios'
 export default {
   name:'MainMovieList',
   data() {
     return {
       movies: [],
       draweer: null,
-      isLoaded: false,
+      isLoaded: true,
     }
   },
+
+  computed: {
+    ...mapGetters(['FetchedMoviesByGenre'])
+  },
+
   created() {
     this.getMovie()
   },
   methods: {
+
     getMovie() {
-      const myToken = localStorage.getItem('jwt')
-      axios.get(SERVER_URL, {headers: {'Authorization' : 'JWT ' + myToken }})
-      .then(res=>{
-        this.movies = res.data.movies_by_genre
-        this.isLoaded = true
-      })
-      .catch(err=>{
-        console.log(err)
-      })
+      this.$store.dispatch('FETCH_MOVIES')
     },
+
     goToDetail(movie) {
       this.$store.state.selectedMovie = movie.id
       this.$router.push('/movies/' + movie.id + '/reviews/')
@@ -110,7 +108,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #inspire {
   position: sticky;
   font-family:'La Belle Aurore','Noto Sans KR','Serif';

@@ -9,7 +9,7 @@
       <!-- <DropDown/> -->
 
       <MyPageReview 
-      v-for="(review, idx) in myReviews" :key="idx"
+      v-for="(review, idx) in MyReviewList" :key="idx"
       class="my-review"
       :review="review"
       />
@@ -18,10 +18,8 @@
 </template>
 
 <script>
-import axios from 'axios'
 import MyPageReview from '../components/MyPageReview.vue'
-// import DropDown from '../components/DropDown.vue'
-const SERVER_URL = 'http://3.35.18.1:8000/api/v1/movie_community/user_reviews/'
+import {mapGetters} from 'vuex'
 
 export default {
   components: { MyPageReview },
@@ -31,20 +29,13 @@ export default {
             myReviews: [],
         }
     },
+
+    computed: {
+        ...mapGetters(['MyReviewList'])
+    },
     methods: {
         getMyReviews(){
-            console.log('getMyReviews called')
-            const myToken = localStorage.getItem('jwt')
-            axios.get(SERVER_URL, {params:{}, headers: {'Authorization' : 'JWT ' + myToken }})
-                .then(res => {
-                    console.log(res.data)
-                    this.myReviews = res.data
-                    console.log(res.data[1].movie[0][0])
-                    this.myReviews = res.data
-                })
-                .catch(err => {
-                    console.log(err)
-                })
+            this.$store.dispatch('FETCH_MY_REVIEWS')
         },
     },
     created: function() {

@@ -1,6 +1,5 @@
 <template>
-  <div id="app"
-    class="d-flex flex-row appBack">
+  <div>
       <div>
         <Menu/>
       </div>
