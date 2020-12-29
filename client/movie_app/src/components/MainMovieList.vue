@@ -110,7 +110,7 @@ export default {
 
 <style scoped>
 #inspire {
-  position: sticky;
+  /* position: sticky; */
   font-family:'La Belle Aurore','Noto Sans KR','Serif';
   font-size: 40px;
 }

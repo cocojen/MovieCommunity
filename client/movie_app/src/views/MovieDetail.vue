@@ -22,7 +22,9 @@ export default {
 
   watch: {
     $route(){
+      console.log('route changed')
       this.movieId = `${this.$route.params.movieId}`
+      this.$store.dispatch('FETCH_MOVIE_DETAIL', this.movieId)
     }
   },
 

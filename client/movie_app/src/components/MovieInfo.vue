@@ -103,6 +103,10 @@ export default {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300&display=swap');
 
+.theme--light.v-icon {
+    color: red;
+}
+
 .img {
   /* <img src="paris.jpg" alt="Paris" width="400" height="300"> */
     max-width: 100%;

@@ -8,7 +8,7 @@ const actions= {
     /// 토큰이 저장되어 있으면 유저 정보 반환, 
     /// 저장되어 있지 않으면 isLoggedIn: false 를 반환
     FETCH_USER_DATA(context) {
-      console.log('fetch user data after login or logout')
+      console.log('fetch user data')
       const token = localStorage.getItem('jwt')
       if (token != null) {
         var base64Url = token.split('.')[1];

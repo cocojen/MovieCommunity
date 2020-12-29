@@ -1,11 +1,12 @@
 <template>
   <div class='nomargin'>
-      <h1>my page</h1>
-      <hr>
-      <h2>내가 작성한 리뷰</h2>
-      <br>
+      <div class="mypage-header">
+          <h1>My Page</h1>
+          <hr>
+          <h2>내가 작성한 리뷰</h2>
+      </div>
     
-      <div class="mypage-description">영화 창을 클릭하여 리뷰페이지로 이동하세요</div>
+      <div class="mypage-description">박스를 클릭하여 리뷰페이지로 이동하세요</div>
       <!-- <DropDown/> -->
 
       <MyPageReview 
@@ -45,6 +46,12 @@ export default {
 </script>
 
 <style>
+
+.mypage-header {
+    font-family: 'Ubuntu', sans-serif;
+    margin-left: 3%;
+}
+
 .mypage-description {
     margin-top: 3%;
     margin-left: 18px;

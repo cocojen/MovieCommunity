@@ -3,12 +3,13 @@
       <div>
         <Menu/>
       </div>
-           
+    <spinner :loading="true"></spinner>
   </div>
 </template>
 
 <script>
 import Menu from '@/views/Menu'
+import Spinner from './components/Spinner.vue';
 
 
 export default {
@@ -16,6 +17,7 @@ export default {
 
   components: {
     Menu,
+    Spinner,
   },
 
   data: function() {

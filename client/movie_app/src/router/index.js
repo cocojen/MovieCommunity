@@ -6,6 +6,7 @@ import Signup from '../views/Signup.vue'
 import MovieDetail from '../views/MovieDetail.vue'
 import Mypage from '../views/Mypage.vue'
 import Recommend from '../views/Recommend.vue'
+import RegisterMovie from '../views/RegisterMovie.vue'
 
 
 
@@ -43,6 +44,11 @@ const routes = [
     path: '/recommend', 
     name: 'Recommend',
     component: Recommend,
+  },
+  {
+    path: '/register_movie', 
+    name: 'RegisterMovie',
+    component: RegisterMovie,
   },
 
 ]

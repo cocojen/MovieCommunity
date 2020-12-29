@@ -5,14 +5,15 @@
     <nav>
       <ul class="side link">
         <div v-if="this.$store.state.loggedInUserData.isLoggedIn">
-          <div class="logo"><router-link to="/mypage" class="navbar"><i class="fas fa-user"></i> My Review</router-link></div>
-          <div class="logo"><router-link to="/recommend" class="navbar"><i class="far fa-check-circle"></i>Recommend</router-link></div>
-          <div class="logo"><router-link @click.native="logout" to="/" class='link navbar'><i class="fas fa-sign-out-alt"></i> Logout </router-link></div>
+          <div class="logo"><router-link to="/mypage" class="navbar"><i class="menu-icon fas fa-user"></i> My Review</router-link></div>
+          <div class="logo"><router-link to="/register_movie" class="navbar"><i class="menu-icon fas fa-upload"></i>Register Movie</router-link></div>
+          <div class="logo"><router-link to="/recommend" class="navbar"><i class="menu-icon far fa-check-circle"></i>Recommend</router-link></div>
+          <div class="logo"><router-link @click.native="logout" to="/" class='menu-icon link navbar'><i class="fas fa-sign-out-alt"></i> Logout </router-link></div>
         </div>
 
         <div v-else>
-          <div class="logo"><router-link to="/accounts/login">Login</router-link></div>
-          <div class="logo"><router-link to="/accounts/signup">Register</router-link></div>
+          <div class="logo"><router-link to="/accounts/login" class="navbar"><i class="menu-icon fas fa-sign-in-alt"></i>Login</router-link></div>
+          <div class="logo"><router-link to="/accounts/signup" class="navbar"><i class="menu-icon fas fa-user-plus"></i>Register</router-link></div>
         </div>
       </ul>
       <search-bar></search-bar>
@@ -47,6 +48,9 @@ export default {
 </script>
 
 <style>
+.menu-icon {
+  margin-right: 4%;
+}
 .menu-title {
   font-weight: bold;
   font-family: 'Cormorant Garamond', serif;
@@ -62,7 +66,7 @@ export default {
 
 *,*:before,*:after{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box;margin:0;padding:0}
 body{font-family:arial;font-size:15px}
-a{text-decoration:none;color:#fff}
+a{text-decoration:none;color:rgb(27, 24, 24)}
 #menu{
   box-shadow: 3px 3px 5px lightgray;
   margin-top: 1%;
@@ -94,7 +98,7 @@ a{text-decoration:none;color:#fff}
 #menu-icon.active .second{transform:rotate(135deg);-webkit-transform:rotate(135deg);position:relative;top:-8px;}
 #menu-icon.active .third{display:none}
 #content{padding:60px 20px 30px}
-#menubar{width:100%;height:50px;background:#444;color:#fff;padding:15px;position:fixed; display:block;}
+#menubar{width:100%;height:50px;background:#444;color:rgb(7, 6, 6);padding:15px;position:fixed; display:block;}
 #menu{margin-left:-220px;}
 #main{margin-left:0}
 }
