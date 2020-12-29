@@ -35,6 +35,9 @@ urlpatterns = [
     path('reviews/<int:reviewId>/writer/', views.findWriter),
 
     # PUT : 유저가 작성한 리뷰를 확인했을 때 checked time 을 현재 시간으로 업데이트
-    path('movies/<int:movieId>/reviewsChecked', views.updateReviewCheckedDate)
+    path('movies/<int:movieId>/reviewsChecked', views.updateReviewCheckedDate),
+
+    # POST : IMDB 주소를 입력하면 영화 정보를 크롤링해서 DB에 저장
+    path('register_movie/', views.register_movie),
 
 ]

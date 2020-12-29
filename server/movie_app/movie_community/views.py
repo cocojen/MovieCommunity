@@ -230,3 +230,49 @@ def findWriter(request, reviewId):
         return Response({'isWriter': True})
     else:
         return Response({'isWriter': False})
+
+# @api_view(['GET'])
+# def movie_list(request):
+#     # movies = get_list_or_404(Movie)
+#     movies = Movie.objects.order_by("id")[100:]
+
+#     for movie in movies:
+#         url = 'https://www.imdb.com/title/'
+#         movie_id = movie.imdb_title_id
+#         url = url + movie_id
+#         req = urllib.request.Request(url)
+#         res = urllib.request.urlopen(url).read()
+#         soup = BeautifulSoup(res, 'html.parser')
+#         soup = soup.find("div", class_="poster")
+#         imgUrl = soup.find("img")["src"]
+#         movie.poster_path = imgUrl
+#         movie.save()
+#         print(movie.id)
+#     print('completed')
+#     serializer = MovieSerializer(movies, many=True)
+#     return Response(serializer.data)
+
+@api_view(['POST'])
+def register_movie(request):
+    print(request.data.get('url'))
+    url = request.data.get('url')
+    res = urllib.request.urlopen(url).read()
+    soup = BeautifulSoup(res, 'html.parser')
+
+    print('-------------------title------------------')
+    title = soup.select('div > h1')[0].text
+    print(title)
+
+
+    print('----------------------------------------------------')
+    poster_link = soup.find("div", class_="poster")
+    poster_link = poster_link.img['src']
+    print(poster_link)
+
+    plot = soup.find('div',{'class':'summary_text'}).get_text()
+    print('----------------------------------')
+    print(plot)
+
+    new_movie = Movie(title=title, poster_path=poster_link, description=plot)
+    new_movie.save()
+    return Response({'200': 'okay'})
