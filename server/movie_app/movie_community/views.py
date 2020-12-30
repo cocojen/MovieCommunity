@@ -14,14 +14,20 @@ from django.core import serializers
 from django.forms.models import model_to_dict
 from django.db.models import Avg
 import datetime
-
+import json
 # Create your views here.
 
 
 @api_view(['GET'])
 def all_movie_list(request):
     movies = get_list_or_404(Movie)
-    serializer = MovieSerializer(movies, many=True)
+    serializer = MovieSerializer(movies, many=True).data
+    
+
+    with open('movies.json', 'w', encoding="utf-8") as make_file:
+        json.dump(serializer, make_file, ensure_ascii=False, indent="\t")
+
+
     return Response(data=serializer.data)
 
 
