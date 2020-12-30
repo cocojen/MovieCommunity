@@ -19,6 +19,8 @@ class ReviewSerializer(serializers.ModelSerializer):
         fields = ('id', 'content', 'movie', 'star', 'comments', 'user', 'created_at', 'updated_at')
 
 
+
+
 class MovieSerializer(serializers.ModelSerializer):
 
     reviews = ReviewSerializer(many=True, read_only=True)
@@ -28,3 +30,10 @@ class MovieSerializer(serializers.ModelSerializer):
         fields = ('id', 'title', 'year', 'genre', 'duration', 'country', 'language', 'director', 'actors', 'description', 'avg_vote', 'poster_path',
                   'avg_star', 'reviews')
         # fields = '__all__'
+
+
+class MovieExportSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Movie
+        fields = '__all__'

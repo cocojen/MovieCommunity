@@ -1,4 +1,4 @@
-from .serializers import MovieSerializer, ReviewSerializer, ReviewCommentSerializer
+from .serializers import MovieSerializer, ReviewSerializer, ReviewCommentSerializer, MovieExportSerializer
 from .models import Movie, Review, Review_Comment
 from accounts.models import User
 from django.shortcuts import get_object_or_404, get_list_or_404
@@ -21,14 +21,16 @@ import json
 @api_view(['GET'])
 def all_movie_list(request):
     movies = get_list_or_404(Movie)
-    serializer = MovieSerializer(movies, many=True).data
+    moviesSerializer = MovieSerializer(movies, many=True)
+
+    serializer = MovieExportSerializer(movies, many=True).data
     
 
     with open('movies.json', 'w', encoding="utf-8") as make_file:
         json.dump(serializer, make_file, ensure_ascii=False, indent="\t")
 
 
-    return Response(data=serializer.data)
+    return Response(data=moviesSerializer.data)
 
 
 # 장르별로 10개씩 영화 반환
