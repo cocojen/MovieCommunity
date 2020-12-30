@@ -6,6 +6,7 @@
 
 <script>
 import MovieInfo from '@/components/MovieInfo'
+import bus from '../utils/bus'
 
 
 export default {
@@ -24,6 +25,7 @@ export default {
     $route(){
       console.log('route changed')
       this.movieId = `${this.$route.params.movieId}`
+      bus.$emit('start:spinner')
       this.$store.dispatch('FETCH_MOVIE_DETAIL', this.movieId)
     }
   },

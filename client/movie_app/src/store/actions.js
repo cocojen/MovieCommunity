@@ -1,4 +1,5 @@
 import axios from 'axios'
+import bus from '../utils/bus'
 
 const BASE_URL = 'http://localhost:8000/api/v1/movie_community'
 
@@ -54,6 +55,7 @@ const actions= {
     axios.get(`${BASE_URL}/movies/${movieId}/reviews`, {params:{}, headers: {'Authorization' : 'JWT ' + myToken }})
     .then(res=>{
       context.commit('setMovieDetail', res)
+      bus.$emit('end:spinner')
     })
     .catch(err => {
       console.log(err)

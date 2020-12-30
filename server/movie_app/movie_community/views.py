@@ -255,7 +255,8 @@ def findWriter(request, reviewId):
 @api_view(['POST'])
 def register_movie(request):
     print(request.data.get('url'))
-    url = request.data.get('url')
+    imdbId = request.data.get('url')
+    url = 'https://www.imdb.com/title/' + imdbId + '/?ref_=hm_tpks_tt_1_pd_tp1'
     res = urllib.request.urlopen(url).read()
     soup = BeautifulSoup(res, 'html.parser')
 
@@ -273,6 +274,10 @@ def register_movie(request):
     print('----------------------------------')
     print(plot)
 
-    new_movie = Movie(title=title, poster_path=poster_link, description=plot)
+    new_movie = Movie(imdb_title_id=imdbId, title=title, poster_path=poster_link, description=plot)
     new_movie.save()
-    return Response({'200': 'okay'})
+    # movie = Movie.objects.get()
+
+    movie = Movie.objects.get(imdb_title_id=imdbId)
+    serializer = MovieSerializer(movie)
+    return Response({'movie': serializer.data})
