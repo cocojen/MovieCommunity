@@ -1,4 +1,5 @@
 import axios from 'axios'
+import {handleException} from '../utils/handler'
 
 const config = {
   baseUrl: 'http://localhost:8000/api/v1/movie_community',
@@ -9,8 +10,12 @@ function login(credentials) {
   return axios.post(`${config.baseUrl}/accounts/api-token-auth/`, credentials)
 }
 
-function fetchMoviesByGenre() {
-  return axios.get(`${config.baseUrl}/movie_list_by_genre/`, config.header)
+async function fetchMoviesByGenre() {
+  try {
+    return axios.get(`${config.baseUrl}/movie_list_by_genre/`, config.header)
+  } catch (error) {
+    handleException(error)
+  }
 }
 
 function fetchMovieDetail(movieId) {

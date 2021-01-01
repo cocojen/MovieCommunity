@@ -5,7 +5,8 @@
     <span> <br> IMDB 웹사이트  <i class="fas fa-arrow-right"></i><a href="https://www.imdb.com/?ref_=nv_home"> https://www.imdb.com/?ref_=nv_home</a></span>
     <p>주소 입력 예시 <i class="fas fa-arrow-right"> </i> <a href="https://www.imdb.com/title/tt7876510/?ref_=hm_tpks_tt_1_pd_tp1">https://www.imdb.com/title/tt7876510/?ref_=hm_tpks_tt_1_pd_tp1</a> </p> 
     <v-text-field :rules="rules" @keypress.enter="go" v-model="value"></v-text-field>
-    
+
+
     <h1 v-if="movie_title != false">
       {{ movie_title}} 등록이 완료되었습니다.
       <router-link :to="`/movies/${movie_id}/reviews`">리뷰 페이지로 이동하기</router-link>
