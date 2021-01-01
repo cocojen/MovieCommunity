@@ -117,7 +117,7 @@ export default {
       createOneComment(review) {
           const commentContent = this.commentContent
           const movieId = review.movie
-          this.$store.dispatch('createReviewComment', {review, commentContent, movieId})
+          this.$store.dispatch('CREATE_REVIEW_COMMENT', {review, commentContent, movieId})
           this.commentCreated = !this.commentCreated
           this.showComment = false
           this.commentContent = ''

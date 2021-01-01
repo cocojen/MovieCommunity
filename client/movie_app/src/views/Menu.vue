@@ -7,7 +7,6 @@
         <div v-if="this.$store.state.loggedInUserData.isLoggedIn">
           <div class="logo"><router-link to="/mypage" class="navbar"><i class="menu-icon fas fa-user"></i> My Review</router-link></div>
           <div class="logo"><router-link to="/register_movie" class="navbar"><i class="menu-icon fas fa-upload"></i>Register Movie</router-link></div>
-          <div class="logo"><router-link to="/recommend" class="navbar"><i class="menu-icon far fa-check-circle"></i>Recommend</router-link></div>
           <div class="logo"><router-link @click.native="logout" to="/" class='menu-icon link navbar'><i class="fas fa-sign-out-alt"></i> Logout </router-link></div>
         </div>
 
@@ -41,6 +40,7 @@ export default {
       console.log('logout')
       localStorage.removeItem('jwt')
       this.$store.dispatch('FETCH_USER_DATA')
+      this.$store.dispatch('FETCH_MOVIES')
       this.$router.push({name: 'Login'})
     },
   }

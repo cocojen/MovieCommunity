@@ -95,7 +95,7 @@ const actions= {
   },
 
   // 리뷰 업데이트
-  updateReview(context, payload) {
+  updateReview({dispatch}, payload) {
     const SERVER_URL = `${BASE_URL}/reviews/${payload.review.id}/`
     const myToken = localStorage.getItem('jwt')
     const headers = {headers : {'Authorization' : 'JWT ' + myToken }}
@@ -107,7 +107,7 @@ const actions= {
         console.log(err)
       })
       .finally(() => {
-        context.commit('fetchMovieDetail', payload.review.movie)
+        dispatch('FETCH_MOVIE_DETAIL', payload.review.movie)
       })
   },
 
@@ -124,7 +124,7 @@ const actions= {
         console.log(err)
       })
       .finally(() => {
-        dispatch('fetchMovieDetail', review.movie)
+        dispatch('FETCH_MOVIE_DETAIL', review.movie)
       }) 
     
   },
@@ -143,7 +143,7 @@ const actions= {
   },
 
   // 대댓글 달기
-  createReviewComment(context, payload) {
+  CREATE_REVIEW_COMMENT({dispatch}, payload) {
     const myToken = localStorage.getItem('jwt')
     const SERVER_URL = `${BASE_URL}/reviews/${payload.review.id}/comments/`
     const headers = {headers : {'Authorization' : 'JWT ' + myToken }}
@@ -152,12 +152,12 @@ const actions= {
         .then(res=>{
           console.log(res)
         })
+        .then(() => {
+          dispatch('FETCH_MOVIE_DETAIL', payload.review.movie)
+        })
         .catch(err=> {
           console.log(err)
         })
-        .finally(() => {
-          context.commit('fetchMovieDetail', payload.review.movie)
-        }) 
   },
 
   ///로그인

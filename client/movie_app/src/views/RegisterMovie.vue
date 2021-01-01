@@ -29,8 +29,8 @@ export default {
         value => !!value || 'Required.',
         value => (value || '').length <= 100 || 'Max 20 characters',
         value => {
-          const pattern = 'www.imdb.com/title'
-          return value.includes(pattern) || 'Invalid URL'
+          const pattern = 'tt'
+          return value.includes(pattern) | 'Invalid URL'
         },
       ],
     }),

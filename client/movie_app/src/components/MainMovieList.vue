@@ -1,6 +1,6 @@
 <template>
 
-  <div id="inspire" v-if="isLoaded">
+  <div id="inspire" v-if="LoggedInUserData.isLoggedIn">
     <div class="white bigback">
           <div style="margin: 10%;">
           </div>
@@ -83,12 +83,11 @@ export default {
     return {
       movies: [],
       draweer: null,
-      isLoaded: true,
     }
   },
 
   computed: {
-    ...mapGetters(['FetchedMoviesByGenre'])
+    ...mapGetters(['FetchedMoviesByGenre', 'LoggedInUserData'])
   },
 
   created() {
