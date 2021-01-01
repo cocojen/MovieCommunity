@@ -32,6 +32,7 @@
       :review="review"
     />
     </div>
+    <br>
     <!-- 리뷰 출력하는 for 문 끝 -->
     
     <!-- 리뷰 작성하는 form 시작 -->
@@ -81,7 +82,7 @@ export default {
   },
 
   created() {
-    this.$store.commit('fetchMovieDetail', this.movieId)
+    this.$store.dispatch('FETCH_MOVIE_DETAIL', this.movieId)
     this.$store.dispatch('updateMyReviewCheckedDate', this.movieId)
   },
 
@@ -90,7 +91,7 @@ export default {
       const content = this.content
       const star = this.star
       const movieId = this.movieId
-      this.$store.dispatch('createReview', {content, star, movieId})
+      this.$store.dispatch('CREATE_REVIEW', {content, star, movieId})
       this.star = 0 
       this.content = ''
     },
@@ -99,8 +100,12 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300&display=swap');
+
+.theme--light.v-icon {
+    color: red;
+}
 
 .img {
   /* <img src="paris.jpg" alt="Paris" width="400" height="300"> */

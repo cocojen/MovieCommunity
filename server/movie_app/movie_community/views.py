@@ -1,4 +1,4 @@
-from .serializers import MovieSerializer, ReviewSerializer, ReviewCommentSerializer
+from .serializers import MovieSerializer, ReviewSerializer, ReviewCommentSerializer, MovieExportSerializer
 from .models import Movie, Review, Review_Comment
 from accounts.models import User
 from django.shortcuts import get_object_or_404, get_list_or_404
@@ -14,15 +14,23 @@ from django.core import serializers
 from django.forms.models import model_to_dict
 from django.db.models import Avg
 import datetime
-
+import json
 # Create your views here.
 
 
 @api_view(['GET'])
 def all_movie_list(request):
     movies = get_list_or_404(Movie)
-    serializer = MovieSerializer(movies, many=True)
-    return Response(data=serializer.data)
+    moviesSerializer = MovieSerializer(movies, many=True)
+
+    serializer = MovieExportSerializer(movies, many=True).data
+    
+
+    with open('movies.json', 'w', encoding="utf-8") as make_file:
+        json.dump(serializer, make_file, ensure_ascii=False, indent="\t")
+
+
+    return Response(data=moviesSerializer.data)
 
 
 # 장르별로 10개씩 영화 반환
@@ -230,3 +238,54 @@ def findWriter(request, reviewId):
         return Response({'isWriter': True})
     else:
         return Response({'isWriter': False})
+
+# @api_view(['GET'])
+# def movie_list(request):
+#     # movies = get_list_or_404(Movie)
+#     movies = Movie.objects.order_by("id")[100:]
+
+#     for movie in movies:
+#         url = 'https://www.imdb.com/title/'
+#         movie_id = movie.imdb_title_id
+#         url = url + movie_id
+#         req = urllib.request.Request(url)
+#         res = urllib.request.urlopen(url).read()
+#         soup = BeautifulSoup(res, 'html.parser')
+#         soup = soup.find("div", class_="poster")
+#         imgUrl = soup.find("img")["src"]
+#         movie.poster_path = imgUrl
+#         movie.save()
+#         print(movie.id)
+#     print('completed')
+#     serializer = MovieSerializer(movies, many=True)
+#     return Response(serializer.data)
+
+@api_view(['POST'])
+def register_movie(request):
+    print(request.data.get('url'))
+    imdbId = request.data.get('url')
+    url = 'https://www.imdb.com/title/' + imdbId + '/?ref_=hm_tpks_tt_1_pd_tp1'
+    res = urllib.request.urlopen(url).read()
+    soup = BeautifulSoup(res, 'html.parser')
+
+    print('-------------------title------------------')
+    title = soup.select('div > h1')[0].text
+    print(title)
+
+
+    print('----------------------------------------------------')
+    poster_link = soup.find("div", class_="poster")
+    poster_link = poster_link.img['src']
+    print(poster_link)
+
+    plot = soup.find('div',{'class':'summary_text'}).get_text()
+    print('----------------------------------')
+    print(plot)
+
+    new_movie = Movie(imdb_title_id=imdbId, title=title, poster_path=poster_link, description=plot)
+    new_movie.save()
+    # movie = Movie.objects.get()
+
+    movie = Movie.objects.get(imdb_title_id=imdbId)
+    serializer = MovieSerializer(movie)
+    return Response({'movie': serializer.data})

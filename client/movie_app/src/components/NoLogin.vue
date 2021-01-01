@@ -19,7 +19,7 @@ export default {
   padding: 0;
   margin: 0;
   width: 100%;
-  position: relative;
+  /* position: relative; */
   top: 0;
   left: 0;
 }

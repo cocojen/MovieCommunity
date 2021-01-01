@@ -1,4 +1,6 @@
 <template>
+<div data-app>
+
   <v-autocomplete
     v-model="newTag"
     :items="entries"
@@ -9,6 +11,7 @@
     @keypress.enter="goToDetail(search)"
     class='searchinput'
   ></v-autocomplete>
+</div>
 </template>
 
 <script>
@@ -45,6 +48,7 @@ export default {
       const myToken = localStorage.getItem('jwt')
       axios.get(BASE_URL, {params:{}, headers: {'Authorization' : 'JWT ' + myToken }})
       .then(res=>{
+        console.log(res)
         res.data.forEach(element => {
           this.entries.push(element.title)
         });
@@ -54,6 +58,7 @@ export default {
       })
     },
     goToDetail(search) {
+      console.log('go to detail')
       const myToken = localStorage.getItem('jwt')
       axios.get(BASE_URL, {params:{}, headers: {'Authorization' : 'JWT ' + myToken }})
       .then(res=>{
@@ -70,9 +75,9 @@ export default {
 }
 </script>
 
-<style>
+<style >
 .searchinput {
-  
+  position: absolute;
   margin-left: 10%;
   margin-right: 10%;
 }

@@ -16,6 +16,10 @@ export default {
     MainMovieList,
     NoLogin,
   },
+
+  created() {
+    this.$store.dispatch('FETCH_USER_DATA')
+  },
 }
 </script>
 <style>

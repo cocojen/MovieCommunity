@@ -1,15 +1,16 @@
 <template>
   <div class='nomargin'>
-      <h1>my page</h1>
-      <hr>
-      <h2>내가 작성한 리뷰</h2>
-      <br>
+      <div class="mypage-header">
+          <h1>My Page</h1>
+          <hr>
+          <h2>내가 작성한 리뷰</h2>
+      </div>
     
-      <div class="mypage-description">영화 창을 클릭하여 리뷰페이지로 이동하세요</div>
+      <div class="mypage-description">박스를 클릭하여 리뷰페이지로 이동하세요</div>
       <!-- <DropDown/> -->
 
       <MyPageReview 
-      v-for="(review, idx) in myReviews" :key="idx"
+      v-for="(review, idx) in MyReviewList" :key="idx"
       class="my-review"
       :review="review"
       />
@@ -18,10 +19,8 @@
 </template>
 
 <script>
-import axios from 'axios'
 import MyPageReview from '../components/MyPageReview.vue'
-// import DropDown from '../components/DropDown.vue'
-const SERVER_URL = 'http://3.35.18.1:8000/api/v1/movie_community/user_reviews/'
+import {mapGetters} from 'vuex'
 
 export default {
   components: { MyPageReview },
@@ -31,20 +30,13 @@ export default {
             myReviews: [],
         }
     },
+
+    computed: {
+        ...mapGetters(['MyReviewList'])
+    },
     methods: {
         getMyReviews(){
-            console.log('getMyReviews called')
-            const myToken = localStorage.getItem('jwt')
-            axios.get(SERVER_URL, {params:{}, headers: {'Authorization' : 'JWT ' + myToken }})
-                .then(res => {
-                    console.log(res.data)
-                    this.myReviews = res.data
-                    console.log(res.data[1].movie[0][0])
-                    this.myReviews = res.data
-                })
-                .catch(err => {
-                    console.log(err)
-                })
+            this.$store.dispatch('FETCH_MY_REVIEWS')
         },
     },
     created: function() {
@@ -54,6 +46,12 @@ export default {
 </script>
 
 <style>
+
+.mypage-header {
+    font-family: 'Ubuntu', sans-serif;
+    margin-left: 3%;
+}
+
 .mypage-description {
     margin-top: 3%;
     margin-left: 18px;

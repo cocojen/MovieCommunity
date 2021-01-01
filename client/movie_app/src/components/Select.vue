@@ -138,7 +138,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300&display=swap');
     .img {
       /* <img src="paris.jpg" alt="Paris" width="400" height="300"> */

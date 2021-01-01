@@ -1,32 +1,29 @@
-import axios from 'axios'
-import {Authentication} from './state.js'
-
-
 const mutations = {
   
+  setMoviesByGenre(state, data) {
+    state.moviesByGenres = data.movies_by_genre
+  },
 
-  fetchLoggedInUserData(state) {
-    state.loggedInUserData = Authentication.fetchUserData()
+  setUserData(state, userData) {
+    console.log('set user data after commit')
+    console.log(userData)
+    state.loggedInUserData = userData
   },
 
   toggleDrawerState (state, data) {
     state.drawerState = data
   },
 
-  fetchMovieDetail(state, movieId) {
+  setMovieDetail(state, res) {
+    const acts = res.data.actors.split(',')
+    state.movieDetail.reviews = res.data.reviews
+    state.movieDetail.movieInfo = res.data
+    state.movieDetail.actors = acts.slice(0,5)
+    state.movieDetail.length_of_reviews = res.data.reviews.length
+  },
 
-    const myToken = localStorage.getItem('jwt')
-    axios.get(`http://3.35.18.1/api/v1/movie_community/movies/${movieId}/reviews`, {params:{}, headers: {'Authorization' : 'JWT ' + myToken }})
-    .then(res=>{
-      const acts = res.data.actors.split(',')
-      state.movieDetail.reviews = res.data.reviews
-      state.movieDetail.movieInfo = res.data
-      state.movieDetail.actors = acts.slice(0,5)
-      state.movieDetail.length_of_reviews = res.data.reviews.length
-    })
-    .catch(err => {
-      console.log(err)
-    })
+  setMyReview(state, res) {
+    state.myReviews = res
   },
 }
 
