@@ -1,5 +1,5 @@
 import {fetchMoviesByGenre, fetchMovieDetail, createReview, updateReview, deleteReview, fetchMyReviews, createdReviewComment, login, updateMyReviewCheckedDate} from '../api/index'
-import bus from '../utils/bus'
+// import bus from '../utils/bus'
 
 const actions= {
 
@@ -7,7 +7,6 @@ const actions= {
     /// 토큰이 저장되어 있으면 유저 정보 반환, 
     /// 저장되어 있지 않으면 isLoggedIn: false 를 반환
     FETCH_USER_DATA(context) {
-      console.log('fetch user data')
       const token = localStorage.getItem('jwt')
       if (token != null) {
         var base64Url = token.split('.')[1];
@@ -36,7 +35,7 @@ const actions= {
 
     /// 홈 화면 영화 장르별 리스트 
     FETCH_MOVIES(context) {
-      fetchMoviesByGenre()
+      return fetchMoviesByGenre()
       .then(res=>{
         context.commit('setMoviesByGenre', res.data)
       })
@@ -48,10 +47,10 @@ const actions= {
   // 영화 디테일 정보 
   FETCH_MOVIE_DETAIL(context, movieId) {
 
-    fetchMovieDetail(movieId)
+    return fetchMovieDetail(movieId)
     .then(res=>{
       context.commit('setMovieDetail', res)
-      bus.$emit('end:spinner')
+      
     })
     .catch(err => {
       console.log(err)
@@ -61,7 +60,7 @@ const actions= {
 
   // 리뷰작성 포스트요청
   CREATE_REVIEW({dispatch}, review) {
-    createReview(review)
+    return createReview(review)
       .then(res=> {
         console.log(res)
       })
@@ -73,8 +72,8 @@ const actions= {
       })
   },
 
-  updateMyReviewCheckedDate(context, movieId) {
-    updateMyReviewCheckedDate(movieId)
+  UPDATE_MY_REVIEW_CHECKED_DATE(context, movieId) {
+    return updateMyReviewCheckedDate(movieId)
       .then(res => {
         console.log(res)
       })
@@ -85,7 +84,7 @@ const actions= {
 
   // 리뷰 업데이트
   UPDATE_REVIEW({dispatch}, payload) {
-    updateReview(payload)
+    return updateReview(payload)
       .then(res => {
         console.log(res)
       })
@@ -99,7 +98,7 @@ const actions= {
 
   // 리뷰 삭제
   DELETE_REVIEW({dispatch}, review) {
-    deleteReview(review)
+    return deleteReview(review)
       .then(res => {
         console.log(res)
       })
@@ -114,7 +113,7 @@ const actions= {
 
   /// 마이페이지 내가 작성한 리뷰 
   FETCH_MY_REVIEWS(context) {
-    fetchMyReviews()
+    return fetchMyReviews()
       .then(res => {
           context.commit('setMyReview', res.data)
       })
@@ -125,7 +124,7 @@ const actions= {
 
   // 대댓글 달기
   CREATE_REVIEW_COMMENT({dispatch}, payload) {
-    createdReviewComment(payload)
+    return createdReviewComment(payload)
         .then(res=>{
           console.log(res)
         })
@@ -139,7 +138,7 @@ const actions= {
 
   ///로그인
   LOGIN({dispatch}, credentials) {
-    login(credentials)
+    return login(credentials)
     .then(res => {
       localStorage.setItem('jwt', res.data.token)
     })

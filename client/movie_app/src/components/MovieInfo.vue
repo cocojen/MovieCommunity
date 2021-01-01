@@ -82,8 +82,7 @@ export default {
   },
 
   created() {
-    this.$store.dispatch('FETCH_MOVIE_DETAIL', this.movieId)
-    this.$store.dispatch('updateMyReviewCheckedDate', this.movieId)
+    
   },
 
   methods: {
