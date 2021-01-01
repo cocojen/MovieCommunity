@@ -1,7 +1,5 @@
-import axios from 'axios'
+import {fetchMoviesByGenre, fetchMovieDetail, createReview, updateReview, deleteReview, fetchMyReviews, createdReviewComment, login, updateMyReviewCheckedDate} from '../api/index'
 import bus from '../utils/bus'
-
-const BASE_URL = 'http://localhost:8000/api/v1/movie_community'
 
 const actions= {
 
@@ -38,8 +36,7 @@ const actions= {
 
     /// 홈 화면 영화 장르별 리스트 
     FETCH_MOVIES(context) {
-      const myToken = localStorage.getItem('jwt')
-      axios.get(`${BASE_URL}/movie_list_by_genre/`, {headers: {'Authorization' : 'JWT ' + myToken }})
+      fetchMoviesByGenre()
       .then(res=>{
         context.commit('setMoviesByGenre', res.data)
       })
@@ -51,8 +48,7 @@ const actions= {
   // 영화 디테일 정보 
   FETCH_MOVIE_DETAIL(context, movieId) {
 
-    const myToken = localStorage.getItem('jwt')
-    axios.get(`${BASE_URL}/movies/${movieId}/reviews`, {params:{}, headers: {'Authorization' : 'JWT ' + myToken }})
+    fetchMovieDetail(movieId)
     .then(res=>{
       context.commit('setMovieDetail', res)
       bus.$emit('end:spinner')
@@ -65,11 +61,7 @@ const actions= {
 
   // 리뷰작성 포스트요청
   CREATE_REVIEW({dispatch}, review) {
-    const SERVER_URL = `${BASE_URL}/movies/${review.movieId}/reviews/`
-    const myToken = localStorage.getItem('jwt')
-    const headers = {headers : {'Authorization' : 'JWT ' + myToken }}
-
-    axios.post(SERVER_URL, {content: review.content, star: review.star, movie: review.movieId}, headers)
+    createReview(review)
       .then(res=> {
         console.log(res)
       })
@@ -82,10 +74,7 @@ const actions= {
   },
 
   updateMyReviewCheckedDate(context, movieId) {
-    const SERVER_URL = `${BASE_URL}/movies/${movieId}/reviewsChecked`
-    const myToken = localStorage.getItem('jwt')
-    const headers = {headers : {'Authorization' : 'JWT ' + myToken }}
-    axios.put(SERVER_URL, {content: ''}, headers)
+    updateMyReviewCheckedDate(movieId)
       .then(res => {
         console.log(res)
       })
@@ -95,11 +84,8 @@ const actions= {
   },
 
   // 리뷰 업데이트
-  updateReview({dispatch}, payload) {
-    const SERVER_URL = `${BASE_URL}/reviews/${payload.review.id}/`
-    const myToken = localStorage.getItem('jwt')
-    const headers = {headers : {'Authorization' : 'JWT ' + myToken }}
-    axios.put(SERVER_URL, {content: payload.reviewUpdateContent}, headers)
+  UPDATE_REVIEW({dispatch}, payload) {
+    updateReview(payload)
       .then(res => {
         console.log(res)
       })
@@ -112,11 +98,8 @@ const actions= {
   },
 
   // 리뷰 삭제
-  deleteReview({dispatch}, review) {
-    const myToken = localStorage.getItem('jwt')
-    const SERVER_URL = `${BASE_URL}/reviews/${review.id}/`
-
-    axios.delete(SERVER_URL, {params:{}, headers: {'Authorization' : 'JWT ' + myToken }})
+  DELETE_REVIEW({dispatch}, review) {
+    deleteReview(review)
       .then(res => {
         console.log(res)
       })
@@ -131,10 +114,8 @@ const actions= {
 
   /// 마이페이지 내가 작성한 리뷰 
   FETCH_MY_REVIEWS(context) {
-    const myToken = localStorage.getItem('jwt')
-    axios.get(`${BASE_URL}/user_reviews/`, {params:{}, headers: {'Authorization' : 'JWT ' + myToken }})
+    fetchMyReviews()
       .then(res => {
-          console.log(res.data)
           context.commit('setMyReview', res.data)
       })
       .catch(err => {
@@ -144,11 +125,7 @@ const actions= {
 
   // 대댓글 달기
   CREATE_REVIEW_COMMENT({dispatch}, payload) {
-    const myToken = localStorage.getItem('jwt')
-    const SERVER_URL = `${BASE_URL}/reviews/${payload.review.id}/comments/`
-    const headers = {headers : {'Authorization' : 'JWT ' + myToken }}
-
-    axios.post(SERVER_URL, {content: payload.commentContent, review: payload.review.id, movie:payload.movieId}, headers)
+    createdReviewComment(payload)
         .then(res=>{
           console.log(res)
         })
@@ -162,11 +139,9 @@ const actions= {
 
   ///로그인
   LOGIN({dispatch}, credentials) {
-    console.log('login')
-    axios.post(`${BASE_URL}/accounts/api-token-auth/`, credentials)
+    login(credentials)
     .then(res => {
       localStorage.setItem('jwt', res.data.token)
-      // this.$router.push({name: 'Home'})
     })
     .catch(err => {
       if (err.response.status === 400) {
