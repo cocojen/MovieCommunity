@@ -24,11 +24,11 @@
 
 #### ERD
 
-![erd](README.assets\movie_erd.jpg)
+![erd](README.assets/movie_erd.jpg)
 
 
 ### 사용 화면
 
-![user_view](README.assets\userview.gif)
+![user_view](README.assets/userview.gif)
 
 
