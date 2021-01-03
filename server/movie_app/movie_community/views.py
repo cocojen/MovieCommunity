@@ -15,20 +15,13 @@ from django.forms.models import model_to_dict
 from django.db.models import Avg
 import datetime
 import json
-# Create your views here.
+from django.views.generic import ListView
 
 
 @api_view(['GET'])
 def all_movie_list(request):
     movies = get_list_or_404(Movie)
     moviesSerializer = MovieSerializer(movies, many=True)
-
-    serializer = MovieExportSerializer(movies, many=True).data
-    
-
-    with open('movies.json', 'w', encoding="utf-8") as make_file:
-        json.dump(serializer, make_file, ensure_ascii=False, indent="\t")
-
 
     return Response(data=moviesSerializer.data)
 
@@ -98,30 +91,6 @@ def updateReviewCheckedDate(request, movieId):
         print(review.checked_time)
     
     return Response(data={'msg' : 'checked_date updated'})
-
-
-
-
-# @api_view(['GET'])
-# def movie_list(request):
-#     # movies = get_list_or_404(Movie)
-#     movies = Movie.objects.order_by("id")[100:]
-
-#     for movie in movies:
-#         url = 'https://www.imdb.com/title/'
-#         movie_id = movie.imdb_title_id
-#         url = url + movie_id
-#         req = urllib.request.Request(url)
-#         res = urllib.request.urlopen(url).read()
-#         soup = BeautifulSoup(res, 'html.parser')
-#         soup = soup.find("div", class_="poster")
-#         imgUrl = soup.find("img")["src"]
-#         movie.poster_path = imgUrl
-#         movie.save()
-#         print(movie.id)
-#     print('completed')
-#     serializer = MovieSerializer(movies, many=True)
-#     return Response(serializer.data)
 
 
 # 마이페이지) 유저가 리뷰를 작성한 영화(겹치지 않게)목록을 반환해주기.
@@ -211,15 +180,11 @@ def comment_list(request, review_id):
         serializer = ReviewCommentSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save(user=request.user)
-            # 그냥 아이디만 request body 에 넣어주면  serializer(data=request.data) 로 넣어주면 알아서 해당 아이디의 객체를 찾아서 넣어주는듯..대박 굳이
-            # 첨에는 request.POST.get('review') 해서 리뷰 아이디 찾아서 review = Review.objects.filter(id=review_id) 해서 찾아줘서 serializer(review=review)
-            # 이렇게 넣어주려고했는데 에러만 나고(user는 User 인스턴스여야 한다는 에러남. querydict 로 와서그런가.) 그냥 아무것도안하면 알아서 장고에서 다 해주는것이었다 디박
             return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 @api_view(['GET'])
 def recommend_movie(request, genre):
-
     recommend_movies = Movie.objects.filter(
         genre__startswith=genre).order_by('-avg_vote')[:1]
     serializer = MovieSerializer(recommend_movies, many=True)
@@ -229,36 +194,31 @@ def recommend_movie(request, genre):
 @api_view(['GET'])
 def findWriter(request, reviewId):
     review = get_object_or_404(Review, pk=reviewId)
-    print('----------------------------------------')
-    print(reviewId)
-    print(review.user.id)
-    print(request.user.id)
-
     if request.user.id == review.user_id:
         return Response({'isWriter': True})
     else:
         return Response({'isWriter': False})
 
-# @api_view(['GET'])
-# def movie_list(request):
-#     # movies = get_list_or_404(Movie)
-#     movies = Movie.objects.order_by("id")[100:]
+@api_view(['GET'])
+def get_proper_movie_poster(request):
+    # movies = get_list_or_404(Movie)
+    movies = Movie.objects.order_by("id")[100:]
 
-#     for movie in movies:
-#         url = 'https://www.imdb.com/title/'
-#         movie_id = movie.imdb_title_id
-#         url = url + movie_id
-#         req = urllib.request.Request(url)
-#         res = urllib.request.urlopen(url).read()
-#         soup = BeautifulSoup(res, 'html.parser')
-#         soup = soup.find("div", class_="poster")
-#         imgUrl = soup.find("img")["src"]
-#         movie.poster_path = imgUrl
-#         movie.save()
-#         print(movie.id)
-#     print('completed')
-#     serializer = MovieSerializer(movies, many=True)
-#     return Response(serializer.data)
+    for movie in movies:
+        url = 'https://www.imdb.com/title/'
+        movie_id = movie.imdb_title_id
+        url = url + movie_id
+        req = urllib.request.Request(url)
+        res = urllib.request.urlopen(url).read()
+        soup = BeautifulSoup(res, 'html.parser')
+        soup = soup.find("div", class_="poster")
+        imgUrl = soup.find("img")["src"]
+        movie.poster_path = imgUrl
+        movie.save()
+        print(movie.id)
+    print('completed')
+    serializer = MovieSerializer(movies, many=True)
+    return Response(serializer.data)
 
 @api_view(['POST'])
 def register_movie(request):
@@ -267,21 +227,10 @@ def register_movie(request):
     url = 'https://www.imdb.com/title/' + imdbId + '/?ref_=hm_tpks_tt_1_pd_tp1'
     res = urllib.request.urlopen(url).read()
     soup = BeautifulSoup(res, 'html.parser')
-
-    print('-------------------title------------------')
     title = soup.select('div > h1')[0].text
-    print(title)
-
-
-    print('----------------------------------------------------')
     poster_link = soup.find("div", class_="poster")
     poster_link = poster_link.img['src']
-    print(poster_link)
-
     plot = soup.find('div',{'class':'summary_text'}).get_text()
-    print('----------------------------------')
-    print(plot)
-
     new_movie = Movie(imdb_title_id=imdbId, title=title, poster_path=poster_link, description=plot)
     new_movie.save()
     # movie = Movie.objects.get()
