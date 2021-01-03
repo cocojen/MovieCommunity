@@ -1,3 +1,5 @@
+import bus from '../utils/bus'
+
 const mutations = {
   
   setMoviesByGenre(state, data) {
@@ -20,6 +22,7 @@ const mutations = {
     state.movieDetail.movieInfo = res.data
     state.movieDetail.actors = acts.slice(0,5)
     state.movieDetail.length_of_reviews = res.data.reviews.length
+    bus.$emit('end:spinner')
   },
 
   setMyReview(state, res) {

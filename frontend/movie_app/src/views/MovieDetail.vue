@@ -8,7 +8,6 @@
 import MovieInfo from '@/components/MovieInfo'
 import bus from '../utils/bus'
 
-
 export default {
   name:'MovieDetail',
   data: function() {

@@ -102,13 +102,13 @@ export default {
       
       // 리뷰 삭제 mutation 함수 호출하기
       deleteOneReview(review) {
-        this.$store.dispatch('deleteReview', review)
+        this.$store.dispatch('DELETE_REVIEW', review)
       },
 
       // 리뷰 업데이트 mutation 함수 호출하기
       updateOneReview(review){
           const reviewUpdateContent = this.reviewUpdateContent
-          this.$store.dispatch('updateReview', {review, reviewUpdateContent})
+          this.$store.dispatch('UPDATE_REVIEW', {review, reviewUpdateContent})
           this.showUpdateInput = false
           this.updateNotClicked = !this.updateNotClicked
       },
